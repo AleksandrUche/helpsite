@@ -7,6 +7,7 @@ from .models import *
 from django.shortcuts import render
 from django import forms
 
+# домашняя страница
 class GostHome(TemplateView):
     template_name = 'gost/index.html'
     extra_context = {'title': 'Главная страница'}
