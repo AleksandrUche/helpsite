@@ -1,0 +1,49 @@
+{% extends 'gost/documents.html' %}
+
+{% block input_gost %}
+
+{#  <form action="{% url 'gost33259' %}" method="post">#}
+{#      {% csrf_token %}#}
+{#      {% for f in form %}#}
+{##}
+{#        <lable for="{{ f.id_for_label }}">{{f.label}}: </lable> {{ f }}#}
+{#        <div class="#">{{ f.errors }}</div>#}
+{##}
+{##}
+{#        {% endfor %}#}
+{#      <button type="submit">Найти</button>#}
+{#  </form>#}
+
+  {# ВЫВОД В СТОЛБЕЦ без стилей #}
+  <form action="{% url 'gost33259' %}" method="post">
+    {% csrf_token %}
+{#    <input type="text" name="type" placeholder="Тип фланца (1, 2, ...11)">#}
+{#    <input type="text" name="surface" placeholder="Поверхность(F, E)">#}
+    <input type="text" name="dn_passage" placeholder="DN">
+{#    <input type="text" name="pn" placeholder="PN">#}
+    <input type="submit" value="OK">
+  </form>
+
+{# ВЫВОД В СТРОКУ #}
+{#    <div class="col-2">#}
+{#      <input type="text" id="#" placeholder="Тип фланца (1, 2, ...11)">#}
+{#    </div>#}
+{#    <div class="col-2">#}
+{#      <input type="text" id="#" placeholder="Поверхность(F, E)">#}
+{#    </div>#}
+{#    <div class="col-2">#}
+{#      <input type="text" id="#" placeholder="DN">#}
+{#    </div>#}
+{#    <div class="col-2">#}
+{#      <input type="text" id="#" placeholder="PN">#}
+{#    <div>#}
+
+{#  Вывод данных через цикл#}
+<ul>
+  {% for value in object_list %}
+    <li>
+      DN: {{ value.dn_passage }} PN: {{ value.pn }}
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
