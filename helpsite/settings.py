@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gost.apps.GostConfig',  #новое приложение
+    'gost.apps.GostConfig',  # новое приложение
 ]
 
 MIDDLEWARE = [

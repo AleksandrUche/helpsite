@@ -1,4 +1,5 @@
 {% extends 'gost/documents.html' %}
+{% load filters %}
 
 {% block input_gost %}
 
@@ -9,15 +10,11 @@
   </form>
     {% if flange_data %}
 
-        {% for field in fields_types %}
-            <h3>значение: {{ flange_data.pn }} {{field}}</h3>
+        {% for value in flange_data %}
+            {% for field in fields %}
+                <h3>значение: {{ value|getattribute:field }} ,поле: {{ field }}</h3>
+            {% endfor %}
         {% endfor %}
-
-{#        {% for value in flange_data %}#}
-{#            {% for field in fields_types %}#}
-{#                <h3>значение: {{ flange_data.pn }} {{ field }}</h3>#}
-{#            {% endfor %}#}
-{#        {% endfor %}#}
 
         {% for ft in drawing_flange_type %}
             <figure>
@@ -49,12 +46,4 @@
 {#      <input type="text" id="#" placeholder="PN">#}
 {#    <div>#}
 
-{#  Вывод данных через цикл#}
-{#<ul>#}
-{#  {% for value in object_list %}#}
-{#    <li>#}
-{#      DN: {{ value.dn_passage }} PN: {{ value.pn }}#}
-{#    </li>#}
-{#  {% endfor %}#}
-{#</ul>#}
 {% endblock %}

@@ -25,6 +25,6 @@ class AdminGost33259Surface(admin.ModelAdmin):
     )
 
 
-admin.site.register(Gost33259_flange, AdminGost33259)
-admin.site.register(Gost33259_type, AdminGost33259Type)
-admin.site.register(Gost33259_surface, AdminGost33259Surface)
+admin.site.register(Gost33259Flange, AdminGost33259)
+admin.site.register(Gost33259Type, AdminGost33259Type)
+admin.site.register(Gost33259Surface, AdminGost33259Surface)

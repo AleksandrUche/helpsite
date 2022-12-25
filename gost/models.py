@@ -5,20 +5,20 @@ class Documents(models.Model):
     title = models.CharField(max_length=30)
     slug = models.SlugField(max_length=30, unique=True, db_index=True, verbose_name="URL")
     description = models.CharField(max_length=200)
-    cat_id = models.ForeignKey('Category_doc', on_delete=models.PROTECT, verbose_name="Категории")
+    cat_id = models.ForeignKey('CategoryDoc', on_delete=models.PROTECT, verbose_name="Категории")
 
     def __str__(self):
         return self.title
 
 
-class Category_doc(models.Model):
+class CategoryDoc(models.Model):
     name = models.CharField(max_length=20, db_index=True)
 
     def __str__(self):
         return self.name
 
 
-class Gost33259_flange(models.Model):
+class Gost33259Flange(models.Model):
     dn_passage = models.CharField(max_length=6)
     pn = models.CharField(max_length=6)
     d2 = models.CharField(blank=True, null=True, max_length=6)
@@ -58,7 +58,7 @@ class Gost33259_flange(models.Model):
         ordering = ['id']
 
 
-class Gost33259_type(models.Model):
+class Gost33259Type(models.Model):
     type_fl = models.CharField(max_length=6)
     flange_drawing = models.ImageField(upload_to="photos/%Y/%m/%d/")
 
@@ -67,10 +67,10 @@ class Gost33259_type(models.Model):
 
     class Meta:
         verbose_name = 'типы'
-        verbose_name_plural = 'Тип фланца'
+        verbose_name_plural = 'Типы фланцев ГОСТ 33259-2015'
 
 
-class Gost33259_surface(models.Model):
+class Gost33259Surface(models.Model):
     surface_fl = models.CharField(max_length=6)
     flange_surface = models.ImageField(upload_to="photos/%Y/%m/%d/")
 
@@ -79,4 +79,5 @@ class Gost33259_surface(models.Model):
 
     class Meta:
         verbose_name = 'уплотнительные поверхности'
-        verbose_name_plural = 'Уплотнительная поверхность'
+        verbose_name_plural = 'Уплотнительная поверхность ГОСТ 33259-2015'
+

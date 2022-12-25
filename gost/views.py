@@ -1,12 +1,10 @@
-from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
-from django.views.generic import ListView, TemplateView
+from django.views.generic import TemplateView
 from django.views import View
 
 from .forms import *
 from .models import *
 from django.shortcuts import render
-from django import forms
 
 
 class GostHomeView(TemplateView):  # домашняя страница
@@ -29,9 +27,12 @@ class Gost33259View(View):  # Отображение поиска фланцев
     def post(self, request):
         form = Gost33259Form(request.POST)
         fields_types_fl = {
-            '01': ['dv', 'c1', 'D1', 'D', 'b'],
-            '02': ['c', 'D0', 'D1', 'D', 'b', 'b1', 'dv', 'D2', 'c1'],
-            '11': ['dn_passage', 'pn', 'd1_lower', 'b_lower', 'h', 'd1', 'd', 'dm', 'dn', 'n_lower', 'pin'],  # 'H1' нет значения
+            # для типа 01 нет значения 'с1' в БД (добавить)
+            '01': ['dv_lower', 'd1', 'd', 'b_lower'],
+            # для типа 02 нет значения 'с', 'c1' в БД (добавить)
+            '02': ['d0', 'd1', 'd', 'b_lower', 'b1_lower', 'dv_lower', 'd2'],
+            # для типа 11 нет значения 'H1' в БД (добавить)
+            '11': ['dn_passage', 'pn', 'd1_lower', 'b_lower', 'h', 'd1', 'd', 'dm', 'dn', 'n_lower', 'pin'],
         }
         fields_surface_fl = {
             'B': ['h_lower', 'd2'],
@@ -46,19 +47,18 @@ class Gost33259View(View):  # Отображение поиска фланцев
             pn = form.cleaned_data['pn']
             type_fl = form.cleaned_data['type']
             surface_fl = form.cleaned_data['surface']
-            fields_types = fields_types_fl[form.cleaned_data['type']]
-            fields_surface = fields_surface_fl[form.cleaned_data['surface']]
-
-            flange_data = Gost33259_flange.objects.filter(dn_passage=dn_passage, pn=pn)
-            drawing_flange_type = Gost33259_type.objects.filter(type_fl=type_fl)
-            drawing_flange_surface = Gost33259_surface.objects.filter(surface_fl=surface_fl)
+            # необходимые поля из БД для отображения в шаблоне
+            fields = fields_types_fl[type_fl] + fields_surface_fl[surface_fl]
+            # выбор строки из БД согласно DN и PN фланца
+            flange_data = Gost33259Flange.objects.filter(dn_passage=dn_passage, pn=pn)
+            drawing_flange_type = Gost33259Type.objects.filter(type_fl=type_fl)
+            drawing_flange_surface = Gost33259Surface.objects.filter(surface_fl=surface_fl)
             return render(request, self.template_name,
                           context={'form': form,
                                    'flange_data': flange_data,
                                    'drawing_flange_type': drawing_flange_type,
                                    'drawing_flange_surface': drawing_flange_surface,
-                                   'fields_types': fields_types,
-                                   'fields_surface': fields_surface,
+                                   'fields': fields
                                    }
                           )
 
