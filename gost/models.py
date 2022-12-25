@@ -10,6 +10,7 @@ class Documents(models.Model):
     def __str__(self):
         return self.title
 
+
 class Category_doc(models.Model):
     name = models.CharField(max_length=20, db_index=True)
 
@@ -64,10 +65,18 @@ class Gost33259_type(models.Model):
     def __str__(self):
         return self.type_fl
 
+    class Meta:
+        verbose_name = 'типы'
+        verbose_name_plural = 'Тип фланца'
+
 
 class Gost33259_surface(models.Model):
     surface_fl = models.CharField(max_length=6)
     flange_surface = models.ImageField(upload_to="photos/%Y/%m/%d/")
 
     def __str__(self):
-        return self.title
+        return self.surface_fl
+
+    class Meta:
+        verbose_name = 'уплотнительные поверхности'
+        verbose_name_plural = 'Уплотнительная поверхность'
