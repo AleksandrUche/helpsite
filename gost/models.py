@@ -69,6 +69,11 @@ class Gost33259AvailabilityFlange(models.Model):
     def __str__(self):
         return self.pn
 
+    class Meta:
+        verbose_name = 'наличе фланцев ГОСТ 33259-2015'
+        verbose_name_plural = 'Наличе фланцев ГОСТ 33259-2015'
+        ordering = ['id']
+
 
 # Тип 01
 class Gost33259Type01(models.Model):
@@ -82,6 +87,14 @@ class Gost33259Type01(models.Model):
     d_lower = models.CharField(blank=True, null=True, max_length=6, verbose_name='d')
     n_lower = models.CharField(blank=True, null=True, max_length=6, verbose_name='n')
     pin = models.CharField(blank=True, null=True, max_length=6, verbose_name='Диаметр шпилек')
+
+    def __str__(self):
+        return self.dn_passage
+
+    class Meta:
+        verbose_name = 'тип 01 ГОСТ 33259-2015'
+        verbose_name_plural = 'Тип 01 ГОСТ 33259-2015'
+        ordering = ['id']
 
 
 # Тип 02
@@ -98,8 +111,16 @@ class Gost33259Type02(models.Model):
     d = models.CharField(blank=True, null=True, max_length=6, verbose_name='D')
     d1 = models.CharField(blank=True, null=True, max_length=6, verbose_name='D1')
     d_lower = models.CharField(blank=True, null=True, max_length=6, verbose_name='d')
-    n = models.CharField(blank=True, null=True, max_length=6, verbose_name='n')
+    n_lower = models.CharField(blank=True, null=True, max_length=6, verbose_name='n')
     pin = models.CharField(blank=True, null=True, max_length=6, verbose_name='Диаметр шпилек')
+
+    def __str__(self):
+        return self.dn_passage
+
+    class Meta:
+        verbose_name = 'тип 02 ГОСТ 33259-2015'
+        verbose_name_plural = 'Тип 02 ГОСТ 33259-2015'
+        ordering = ['id']
 
 
 # Тип 11
@@ -119,11 +140,15 @@ class Gost33259Type11(models.Model):
     pin = models.CharField(blank=True, null=True, max_length=6, verbose_name='Диаметр шпилек')
 
     def __str__(self):
-        return self.dn_passage
+        field_values = []
+        for field in self._meta.get_fields():
+            field_values.append(str(getattr(self, field.name, '')))
+        return ' '.join(field_values)
+
 
     class Meta:
-        verbose_name = 'ГОСТ 33259-2015'
-        verbose_name_plural = 'ГОСТ 33259-2015'
+        verbose_name = 'тип 11 ГОСТ 33259-2015'
+        verbose_name_plural = 'Тип 11 ГОСТ 33259-2015'
         ordering = ['id']
 
 
@@ -152,6 +177,36 @@ class Gost33259SurfaceValues(models.Model):
     def __str__(self):
         return self.dn_passage
 
+    class Meta:
+        verbose_name = 'уплотнительные поверхности'
+        verbose_name_plural = 'Уплотнительная поверхность ГОСТ 33259-2015'
+        ordering = ['id']
+
+
+# Масса фланцев ГОСТ 33259
+class Gost33259Mass(models.Model):
+    dn_passage = models.CharField(max_length=6, verbose_name='DN')
+    type_fl = models.CharField(max_length=6, verbose_name='Тип')
+    pn_1 = models.CharField(max_length=6, verbose_name='PN 1')
+    pn_2 = models.CharField(max_length=6, verbose_name='PN 2,5')
+    pn_6 = models.CharField(max_length=6, verbose_name='PN 6')
+    pn_10 = models.CharField(max_length=6, verbose_name='PN 10')
+    pn_16 = models.CharField(max_length=6, verbose_name='PN 16')
+    pn_25 = models.CharField(max_length=6, verbose_name='PN 25')
+    pn_40 = models.CharField(max_length=6, verbose_name='PN 40')
+    pn_63 = models.CharField(max_length=6, verbose_name='PN 63')
+    pn_100 = models.CharField(max_length=6, verbose_name='PN 100')
+    pn_160 = models.CharField(max_length=6, verbose_name='PN 160')
+    pn_200 = models.CharField(max_length=6, verbose_name='PN 200')
+
+    def __str__(self):
+        return self.dn_passage
+
+    class Meta:
+        verbose_name = 'массы'
+        verbose_name_plural = 'Массы ГОСТ 33259-2015'
+        ordering = ['id']
+
 
 # чертеж типа фланца
 class Gost33259TypeDrawing(models.Model):
@@ -163,20 +218,20 @@ class Gost33259TypeDrawing(models.Model):
 
     class Meta:
         verbose_name = 'типы'
-        verbose_name_plural = 'Типы фланцев ГОСТ 33259-2015'
+        verbose_name_plural = 'Чертежи типов фланцев ГОСТ 33259-2015'
 
 
 # чертеж уплотнительной поверхности фланца
 class Gost33259SurfaceDrawing(models.Model):
     surface_fl = models.CharField(max_length=6)
-    flange_surface = models.ImageField(upload_to="photos/%Y/%m/%d/")
+    surface_drawing = models.ImageField(upload_to="photos/%Y/%m/%d/")
 
     def __str__(self):
         return self.surface_fl
 
     class Meta:
         verbose_name = 'уплотнительные поверхности'
-        verbose_name_plural = 'Уплотнительная поверхность ГОСТ 33259-2015'
+        verbose_name_plural = 'Чертежи уплотнительной поверхность ГОСТ 33259-2015'
 
 
 '''
@@ -205,6 +260,9 @@ class Atk261813FlangeExec1(models.Model):
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
 
+    def __str__(self):
+        return self.dn_passage
+
 
 # Исполнение 2
 class Atk261813FlangeExec2(models.Model):
@@ -222,6 +280,9 @@ class Atk261813FlangeExec2(models.Model):
     d_lower = models.CharField(max_length=6, verbose_name='d')
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
+
+    def __str__(self):
+        return self.dn_passage
 
 
 # Исполнение 3
@@ -243,6 +304,9 @@ class Atk261813FlangeExec3(models.Model):
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
 
+    def __str__(self):
+        return self.dn_passage
+
 
 # Исполнение 4
 class Atk261813FlangeExec4(models.Model):
@@ -261,6 +325,9 @@ class Atk261813FlangeExec4(models.Model):
     d_lower = models.CharField(max_length=6, verbose_name='d')
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
+
+    def __str__(self):
+        return self.dn_passage
 
 
 # Исполнение 5
@@ -283,6 +350,9 @@ class Atk261813FlangeExec5(models.Model):
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
 
+    def __str__(self):
+        return self.dn_passage
+
 
 # Исполнение 6
 class Atk261813FlangeExec6(models.Model):
@@ -304,6 +374,9 @@ class Atk261813FlangeExec6(models.Model):
     d_lower = models.CharField(max_length=6, verbose_name='d')
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
+
+    def __str__(self):
+        return self.dn_passage
 
 
 '''

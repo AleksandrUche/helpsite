@@ -1,18 +1,36 @@
 {% extends 'gost/documents.html' %}
 {% load filters %}
-
 {% block input_gost %}
 
-  <form action="{% url 'gost33259' %}" method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Найти</button>
-  </form>
+    <form action="{% url 'gost33259' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Найти</button>
+    </form>
+
     {% if flange_data %}
+        <p>Масса фланца: {{ mass_flange }}</p>
+
+{#        {% for key, value in flange_data.items %}#}
+{#                <p>{{ key }} {{ value }}</p>#}
+{#        {% endfor %}#}
+
+{#        {% for values in flange_data %}#}
+{#            {% for value in values %}#}
+{#                <p>{{ value }}</p>#}
+{#            {% endfor %}#}
+{#        {% endfor %}#}
+{#        {{ flange_data }}#}
 
         {% for value in flange_data %}
+            {% for key, elem in value.items %}
+                <p>Поле: {{ key }}  |  Значение: {{ elem }}</p>
+            {% endfor %}
+        {% endfor %}
+
+        {% for value in surface_data %}
             {% for field in fields %}
-                <h3>значение: {{ value|getattribute:field }} ,поле: {{ field }}</h3>
+                <p>значение: {{ value|getattribute:field }} |  поле: {{ field }}</p>
             {% endfor %}
         {% endfor %}
 
@@ -29,21 +47,21 @@
         {% endfor %}
 
     {% else %}
-      Введите данные для поиска
+        Введите данные для поиска
     {% endif %}
 
-{# ВЫВОД В СТРОКУ #}
-{#    <div class="col-2">#}
-{#      <input type="text" id="#" placeholder="Тип фланца (1, 2, ...11)">#}
-{#    </div>#}
-{#    <div class="col-2">#}
-{#      <input type="text" id="#" placeholder="Поверхность(F, E)">#}
-{#    </div>#}
-{#    <div class="col-2">#}
-{#      <input type="text" id="#" placeholder="DN">#}
-{#    </div>#}
-{#    <div class="col-2">#}
-{#      <input type="text" id="#" placeholder="PN">#}
-{#    <div>#}
+    {# ВЫВОД В СТРОКУ #}
+    {#    <div class="col-2">#}
+    {#      <input type="text" id="#" placeholder="Тип фланца (1, 2, ...11)">#}
+    {#    </div>#}
+    {#    <div class="col-2">#}
+    {#      <input type="text" id="#" placeholder="Поверхность(F, E)">#}
+    {#    </div>#}
+    {#    <div class="col-2">#}
+    {#      <input type="text" id="#" placeholder="DN">#}
+    {#    </div>#}
+    {#    <div class="col-2">#}
+    {#      <input type="text" id="#" placeholder="PN">#}
+    {#    <div>#}
 
 {% endblock %}
