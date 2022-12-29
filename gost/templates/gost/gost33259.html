@@ -1,5 +1,7 @@
 {% extends 'gost/documents.html' %}
 {% load filters %}
+{% load verbose_names %}
+
 {% block input_gost %}
 
     <form action="{% url 'gost33259' %}" method="post">
@@ -9,40 +11,29 @@
     </form>
 
     {% if flange_data %}
-        <p>Масса фланца: {{ mass_flange }}</p>
-
-{#        {% for key, value in flange_data.items %}#}
-{#                <p>{{ key }} {{ value }}</p>#}
-{#        {% endfor %}#}
-
-{#        {% for values in flange_data %}#}
-{#            {% for value in values %}#}
-{#                <p>{{ value }}</p>#}
-{#            {% endfor %}#}
-{#        {% endfor %}#}
-{#        {{ flange_data }}#}
+        <p>Масса фланца: {{ mass_flange }} кг</p>
 
         {% for value in flange_data %}
-            {% for key, elem in value.items %}
-                <p>Поле: {{ key }}  |  Значение: {{ elem }}</p>
+            {% for field in fields_type %}
+                <p>Поле: {{ value|get_verbose_field_name:field }} | Значение: {{ value|getattribute:field }} мм</p>
             {% endfor %}
         {% endfor %}
 
         {% for value in surface_data %}
-            {% for field in fields %}
-                <p>значение: {{ value|getattribute:field }} |  поле: {{ field }}</p>
+            {% for field in fields_surface %}
+                <p>Поле: {{ value|get_verbose_field_name:field }} | Значение: {{ value|getattribute:field }} мм</p>
             {% endfor %}
         {% endfor %}
 
         {% for ft in drawing_flange_type %}
             <figure>
-                <img src="{{ ft.flange_drawing.url }}" width="50%">
+                <img src="{{ ft.flange_drawing.url }}" width="40%">
             </figure>
         {% endfor %}
 
         {% for fs in drawing_flange_surface %}
             <figure>
-                <img src="{{ fs.flange_surface.url }}" width="40%">
+                <img src="{{ fs.surface_drawing.url }}" width="20%">
             </figure>
         {% endfor %}
 

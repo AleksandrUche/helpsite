@@ -71,7 +71,7 @@ class Gost33259AvailabilityFlange(models.Model):
 
     class Meta:
         verbose_name = 'наличе фланцев ГОСТ 33259-2015'
-        verbose_name_plural = 'Наличе фланцев ГОСТ 33259-2015'
+        verbose_name_plural = 'ГОСТ 33259-2015 наличе фланцев '
         ordering = ['id']
 
 
@@ -93,7 +93,7 @@ class Gost33259Type01(models.Model):
 
     class Meta:
         verbose_name = 'тип 01 ГОСТ 33259-2015'
-        verbose_name_plural = 'Тип 01 ГОСТ 33259-2015'
+        verbose_name_plural = 'ГОСТ 33259-2015 тип 01'
         ordering = ['id']
 
 
@@ -119,7 +119,7 @@ class Gost33259Type02(models.Model):
 
     class Meta:
         verbose_name = 'тип 02 ГОСТ 33259-2015'
-        verbose_name_plural = 'Тип 02 ГОСТ 33259-2015'
+        verbose_name_plural = 'ГОСТ 33259-2015 тип 02 '
         ordering = ['id']
 
 
@@ -140,15 +140,15 @@ class Gost33259Type11(models.Model):
     pin = models.CharField(blank=True, null=True, max_length=6, verbose_name='Диаметр шпилек')
 
     def __str__(self):
-        field_values = []
-        for field in self._meta.get_fields():
-            field_values.append(str(getattr(self, field.name, '')))
-        return ' '.join(field_values)
-
+        # field_values = []
+        # for field in self._meta.get_fields():
+        #     field_values.append(str(getattr(self, field.name, '')))
+        # return ' '.join(field_values)
+        return self.dn_passage
 
     class Meta:
         verbose_name = 'тип 11 ГОСТ 33259-2015'
-        verbose_name_plural = 'Тип 11 ГОСТ 33259-2015'
+        verbose_name_plural = 'ГОСТ 33259-2015 тип 11'
         ordering = ['id']
 
 
@@ -179,7 +179,7 @@ class Gost33259SurfaceValues(models.Model):
 
     class Meta:
         verbose_name = 'уплотнительные поверхности'
-        verbose_name_plural = 'Уплотнительная поверхность ГОСТ 33259-2015'
+        verbose_name_plural = 'ГОСТ 33259-2015 уплотнительная поверхность '
         ordering = ['id']
 
 
@@ -204,34 +204,34 @@ class Gost33259Mass(models.Model):
 
     class Meta:
         verbose_name = 'массы'
-        verbose_name_plural = 'Массы ГОСТ 33259-2015'
+        verbose_name_plural = 'ГОСТ 33259-2015 массы'
         ordering = ['id']
 
 
 # чертеж типа фланца
 class Gost33259TypeDrawing(models.Model):
-    type_fl = models.CharField(max_length=6)
-    flange_drawing = models.ImageField(upload_to="photos/%Y/%m/%d/")
+    type_fl = models.CharField(max_length=6, verbose_name='Тип фланца')
+    flange_drawing = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name='Чертеж')
 
     def __str__(self):
         return self.type_fl
 
     class Meta:
         verbose_name = 'типы'
-        verbose_name_plural = 'Чертежи типов фланцев ГОСТ 33259-2015'
+        verbose_name_plural = 'ГОСТ 33259-2015 чертежи типов фланцев '
 
 
 # чертеж уплотнительной поверхности фланца
 class Gost33259SurfaceDrawing(models.Model):
-    surface_fl = models.CharField(max_length=6)
-    surface_drawing = models.ImageField(upload_to="photos/%Y/%m/%d/")
+    surface_fl = models.CharField(max_length=6, verbose_name='Уплотнительная поверхность')
+    surface_drawing = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name='Чертеж')
 
     def __str__(self):
         return self.surface_fl
 
     class Meta:
         verbose_name = 'уплотнительные поверхности'
-        verbose_name_plural = 'Чертежи уплотнительной поверхность ГОСТ 33259-2015'
+        verbose_name_plural = 'ГОСТ 33259-2015 чертежи уплотнительной поверхность'
 
 
 '''

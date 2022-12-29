@@ -1,4 +1,9 @@
 {% extends 'gost/documents.html' %}
-{% load filters %}
 
 {% block input_gost %}
+    <form action="{% url 'atk261813' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Найти</button>
+    </form>
+{% endblock %}
