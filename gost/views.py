@@ -5,6 +5,7 @@ from django.views import View
 from .forms import *
 from .models import *
 from django.shortcuts import render
+import importlib
 
 
 # домашняя страница
@@ -18,20 +19,30 @@ class DocumentsView(TemplateView):
     extra_context = {'title': 'Стандарты'}
 
 
+# def load_class(name_cls):
+#     module = importlib.import_module('models')
+#     db_class = getattr(module, name_cls)
+#     return db_class
+
+# def load_class_db(name_cls):
+#     module_path = '.models'
+#     module = importlib.import_module(module_path)
+#     my_class = getattr(module, name_cls)
+#     return my_class
+# gost_type = load_class_db(f'Gost33259Type{type_fl}')
+# flange_data = gost_type.objects.filter(surface_fl=surface_fl)
+
 # Отображение поиска фланцев по ГОСТ 33259-2015
-
-
 class Gost33259View(View):
     template_name = 'gost/gost33259.html'
-
-    # form_class =
+    form_class = Gost33259Form
 
     def get(self, request):
-        form = Gost33259Form()
+        form = self.form_class
         return render(request, self.template_name, context={'form': form})
 
     def post(self, request):
-        form = Gost33259Form(request.POST)
+        form = self.form_class(request.POST)
         values_surface_fl = {
             'B': ['h_lower', 'd2'],
             'C': ['h1_lower', 'd3', 'd4'],
@@ -54,28 +65,26 @@ class Gost33259View(View):
             pn = form.cleaned_data['pn']
             type_fl = form.cleaned_data['type']
             surface_fl = form.cleaned_data['surface']
-            # необходимые поля из БД для отображения в шаблоне
-            # fields_surface = values_surface_fl[surface_fl]
-            # fields_type = values_types_fl[type_fl]
             # выбор данных из БД согласно DN, PN и типу фланца
             objects_types_fl = {
                 # для типа 01
-                '01': Gost33259Type01.objects.filter(dn_passage=dn_passage, pn=pn),
+                '01': Gost33259Type01.objects,
                 # для типа 02
-                '02': Gost33259Type02.objects.filter(dn_passage=dn_passage, pn=pn),
+                '02': Gost33259Type02.objects,
                 # для типа 11
-                '11': Gost33259Type11.objects.filter(dn_passage=dn_passage, pn=pn),
+                '11': Gost33259Type11.objects,
             }
-
             drawing_flange_type = Gost33259TypeDrawing.objects.filter(type_fl=type_fl)
             drawing_flange_surface = Gost33259SurfaceDrawing.objects.filter(surface_fl=surface_fl)
-            flange_data = objects_types_fl[type_fl]
-            fields_surface = values_surface_fl[surface_fl]
-            fields_type = values_types_fl[type_fl]
+            flange_data = objects_types_fl[type_fl].filter(dn_passage=dn_passage, pn=pn)
             surface_data = Gost33259SurfaceValues.objects.filter(dn_passage=dn_passage, pn=pn)
             mass_flange = Gost33259Mass.objects.filter(dn_passage=dn_passage, type_fl=type_fl).values_list(f'pn_{pn}',
                                                                                                            flat=True
                                                                                                            ).get()
+            # необходимые поля из БД для отображения в шаблоне
+            fields_surface = values_surface_fl[surface_fl]
+            fields_type = values_types_fl[type_fl]
+
             return render(request, self.template_name,
                           context={'form': form,
                                    'flange_data': flange_data,
@@ -93,24 +102,33 @@ class Gost33259View(View):
 # Отображение поиска фланцев по АТК 26-18-13-96
 class Atk261813View(View):
     template_name = 'gost/atk261813.html'
+    form_class = Atk261813Form
 
     def get(self, request):
-        form = Atk261813Form()
+        form = self.form_class
         return render(request, self.template_name, context={'form': form})
 
     def post(self, request):
-        form = Atk261813Form(request.POST)
+        form = self.form_class(request.POST)
 
         if form.is_valid():
             dn_passage = form.cleaned_data['dn_passage']
             pn = form.cleaned_data['pn']
             execution = form.cleaned_data['execution']
-            # ЛОГИКА
+            objects_exec_fl = {
+                '1': Atk261813FlangeExec1.objects,
+                '2': Atk261813FlangeExec2.objects,
+                '3': Atk261813FlangeExec3.objects,
+                '4': Atk261813FlangeExec4.objects,
+                '5': Atk261813FlangeExec5.objects,
+                '6': Atk261813FlangeExec6.objects,
+            }
+            flange_data = objects_exec_fl[execution].filter(dn_passage=dn_passage, pn=pn)
+            drawing_flange_execution = Atk261813FlangeDrawing.objects.filter(execution_fl=execution)
             return render(request, self.template_name,
                           context={'form': form,
-                                   # 'flange_data': flange_data,
-                                   # 'drawing_flange_type': drawing_flange_type,
-                                   # 'drawing_flange_surface': drawing_flange_surface,
+                                   'flange_data': flange_data,
+                                   'drawing_flange_execution': drawing_flange_execution,
                                    }
                           )
         return render(request, self.template_name, context={'form': form})

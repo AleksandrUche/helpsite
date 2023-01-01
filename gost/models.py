@@ -259,9 +259,14 @@ class Atk261813FlangeExec1(models.Model):
     d_lower = models.CharField(max_length=6, verbose_name='d')
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
+    pin = models.CharField(max_length=6, verbose_name='Диаметр шпилек')
 
     def __str__(self):
         return self.dn_passage
+
+    class Meta:
+        verbose_name = 'исполнение 1'
+        verbose_name_plural = 'АТК 26-18-13-96 исполнение 1'
 
 
 # Исполнение 2
@@ -280,9 +285,14 @@ class Atk261813FlangeExec2(models.Model):
     d_lower = models.CharField(max_length=6, verbose_name='d')
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
+    pin = models.CharField(max_length=6, verbose_name='Диаметр шпилек')
 
     def __str__(self):
         return self.dn_passage
+
+    class Meta:
+        verbose_name = 'исполнение 2'
+        verbose_name_plural = 'АТК 26-18-13-96 исполнение 2'
 
 
 # Исполнение 3
@@ -303,9 +313,14 @@ class Atk261813FlangeExec3(models.Model):
     d_lower = models.CharField(max_length=6, verbose_name='d')
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
+    pin = models.CharField(max_length=6, verbose_name='Диаметр шпилек')
 
     def __str__(self):
         return self.dn_passage
+
+    class Meta:
+        verbose_name = 'исполнение 3'
+        verbose_name_plural = 'АТК 26-18-13-96 исполнение 3'
 
 
 # Исполнение 4
@@ -325,9 +340,14 @@ class Atk261813FlangeExec4(models.Model):
     d_lower = models.CharField(max_length=6, verbose_name='d')
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
+    pin = models.CharField(max_length=6, verbose_name='Диаметр шпилек')
 
     def __str__(self):
         return self.dn_passage
+
+    class Meta:
+        verbose_name = 'исполнение 4'
+        verbose_name_plural = 'АТК 26-18-13-96 исполнение 4'
 
 
 # Исполнение 5
@@ -349,9 +369,14 @@ class Atk261813FlangeExec5(models.Model):
     d_lower = models.CharField(max_length=6, verbose_name='d')
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
+    pin = models.CharField(max_length=6, verbose_name='Диаметр шпилек')
 
     def __str__(self):
         return self.dn_passage
+
+    class Meta:
+        verbose_name = 'исполнение 5'
+        verbose_name_plural = 'АТК 26-18-13-96 исполнение 5'
 
 
 # Исполнение 6
@@ -374,9 +399,26 @@ class Atk261813FlangeExec6(models.Model):
     d_lower = models.CharField(max_length=6, verbose_name='d')
     n_lower = models.CharField(max_length=6, verbose_name='n')
     m = models.CharField(max_length=6, verbose_name='Масса')
+    pin = models.CharField(max_length=6, verbose_name='Диаметр шпилек')
 
     def __str__(self):
         return self.dn_passage
+
+    class Meta:
+        verbose_name = 'исполнение 6'
+        verbose_name_plural = 'АТК 26-18-13-96 исполнение 6'
+
+
+class Atk261813FlangeDrawing(models.Model):
+    execution_fl = models.CharField(max_length=6, verbose_name='Исполнение фланца')
+    execution_drawing = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name='Чертеж')
+
+    def __str__(self):
+        return self.execution_fl
+
+    class Meta:
+        verbose_name = 'чертежи фланца'
+        verbose_name_plural = 'АТК 26-18-13-96 чертежи исполнений'
 
 
 '''
