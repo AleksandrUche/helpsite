@@ -235,10 +235,6 @@ class Gost33259SurfaceDrawing(models.Model):
 
 
 '''
-Конец описания моделей для ГОСТ 33259-2015
-'''
-
-'''
 Начало описания моделей для АТК 26-18-13-96
 '''
 
@@ -422,5 +418,38 @@ class Atk261813FlangeDrawing(models.Model):
 
 
 '''
-Конец описания моделей для АТК 26-18-13-96
+Начало описания моделей для днищ ГОСТ 6533-78
+'''
+
+
+class Gost6533Bottoms(models.Model):
+    d = models.CharField(max_length=6, verbose_name='D')
+    exec = models.CharField(max_length=6, verbose_name='h1')
+    h1_lower = models.CharField(max_length=6, verbose_name='hн')
+    hn_lower = models.CharField(max_length=6, verbose_name='s')
+    s_lower = models.CharField(max_length=6, verbose_name='')
+    m = models.CharField(max_length=6, verbose_name='Масса')
+
+    def __str__(self):
+        return self.d
+
+    class Meta:
+        verbose_name = 'размеры днищ'
+        verbose_name_plural = 'Днища ГОСТ 6533-78 размеры'
+
+
+class Gost6533BottomsDrawing(models.Model):
+    execution = models.CharField(max_length=6, verbose_name='Исполнение фланца')
+    execution_drawing = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name='Чертеж')
+
+    def __str__(self):
+        return self.execution
+
+    class Meta:
+        verbose_name = 'чертежи днищ'
+        verbose_name_plural = 'Днища ГОСТ 6533-78 чертежи исполнений'
+
+
+'''
+Начало описания моделей для заглушек 
 '''
