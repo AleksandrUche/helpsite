@@ -1,87 +1,107 @@
 {% extends 'gost/documents.html' %}
+{% load static %}
 {% load filters %}
 {% load verbose_names %}
 
 {% block content %}
     <div class="container">
-        <form class="form-contact" action="{% url 'gost33259' %}" method="POST">
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="form-group row">
-                    <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                    <div class="col-5">
-                        <input type="text" class="form-control"
-                               list="{{ field.name }}"
-                               name="{{ field.name }}"
-                               id="id_{{ field.name }}"
-                                {% if field.value %}
-                               value="{{ field.value }}"
-                                {% else %}
-                               placeholder="Введите значение"
-                                {% endif %}>
-                        <datalist id="{{ field.name }}">
-                            {% for elem in field.help_text %}
-                                <option value="{{ elem }}">
-                            {% endfor %}
-                        </datalist>
+        <div class="row">
+            <div class="col-5">
+                <form class="form-contact" action="{% url 'gost33259' %}" method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group row">
+                            <label for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-6">
+                                <input type="text" class="form-control"
+                                       list="{{ field.name }}"
+                                       name="{{ field.name }}"
+                                       id="id_{{ field.name }}"
+                                        {% if field.value %}
+                                       value="{{ field.value }}"
+                                        {% else %}
+                                       placeholder="Введите значение"
+                                        {% endif %}>
+                                <datalist id="{{ field.name }}">
+                                    {% for elem in field.help_text %}
+                                        <option value="{{ elem }}">
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-12 gy-2">
+                            <input type="submit" value="Найти" class="btn btn-primary">
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
-            <div class="row ">
-                <div class="col-12 gy-2">
-                    <input type="submit" value="Найти" class="btn btn-primary">
-                </div>
+                </form>
             </div>
-        </form>
+            <div class="col">
+                <img src="{% static 'images/gosts/gost33259-2015/11.png' %}" class="img-fluid" alt="Тип 11">
+            </div>
+            <div class="col">
+                <img src="{% static 'images/gosts/gost33259-2015/11.png' %}" class="img-fluid" alt="Тип 11">
+            </div>
+            <div class="col">
+                <img src="{% static 'images/gosts/gost33259-2015/11.png' %}" class="img-fluid" alt="Тип 11">
+            </div>
+        </div>
     </div>
 
 
     {% if flange_data %}
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <table class="table table-bordered caption-top">
+                        <caption>Размеры фланца</caption>
+                        <thead>
+                        <tr>
+                            {% for value in flange_data %}
+                                {% for field in fields_type %}
+                                    <th scope="col">{{ value|get_verbose_field_name:field }}</th>
+                                {% endfor %}
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            {% for value in flange_data %}
+                                {% for field in fields_type %}
+                                    <td>{{ value|getattribute:field }}</td>
+                                {% endfor %}
+                            {% endfor %}
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-        <table class="table table-sm table-bordered caption-top">
-            <caption>Размеры фланца</caption>
-            <thead>
-            <tr>
-                {% for value in flange_data %}
-                    {% for field in fields_type %}
-                        <th scope="col">{{ value|get_verbose_field_name:field }}</th>
-                    {% endfor %}
-                {% endfor %}
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                {% for value in flange_data %}
-                    {% for field in fields_type %}
-                        <td>{{ value|getattribute:field }}</td>
-                    {% endfor %}
-                {% endfor %}
-            </tr>
-            </tbody>
-        </table>
-
-        <table class="table table-sm table-bordered caption-top">
-            <caption>Размеры уплотнительной поверхности</caption>
-            <thead>
-            <tr>
-                {% for value in surface_data %}
-                    {% for field in fields_surface %}
-                        <th scope="col">{{ value|get_verbose_field_name:field }}</th>
-                    {% endfor %}
-                {% endfor %}
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                {% for value in surface_data %}
-                    {% for field in fields_surface %}
-                        <td>{{ value|getattribute:field }}</td>
-                    {% endfor %}
-                {% endfor %}
-            </tr>
-            </tbody>
-        </table>
-
+                <div class="col">
+                    <table class="table table-bordered caption-top">
+                        <caption>Размеры уплотнительной поверхности</caption>
+                        <thead>
+                        <tr>
+                            {% for value in surface_data %}
+                                {% for field in fields_surface %}
+                                    <th class="align-middle" scope="col">{{ value|get_verbose_field_name:field }}</th>
+                                {% endfor %}
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            {% for value in surface_data %}
+                                {% for field in fields_surface %}
+                                    <td>{{ value|getattribute:field }}</td>
+                                {% endfor %}
+                            {% endfor %}
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <p>Масса фланца: {{ mass_flange }} кг</p>
 
         {% for ft in drawing_flange_type %}

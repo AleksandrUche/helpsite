@@ -1,6 +1,6 @@
 {% extends 'gost/documents.html' %}
 
-{% block input_gost %}
+{% block content %}
     <form action="{% url 'atk261813' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
