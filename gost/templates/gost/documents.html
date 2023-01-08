@@ -4,31 +4,63 @@
     {{ title }}
 {% endblock %}
 
-{% block mainmenu %}
+{% block documents %}
+    <div class="container">
+        <div class="row">
+            <aside class="col-3">
+                <nav class="navbar navbar-light flex-column align-items-stretch p-3">
+                    <h6 class="navbar-brand">Стандарты:</h6>
+                    <nav class="nav nav-pills flex-column">
+                        <h6 class="nav-link">Фланцы</h6>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ms-3 my-1" href="{% url 'gost33259' %}">ГОСТ 33259-2015</a>
+                            <a class="nav-link ms-3 my-1" href={% url 'atk261813' %}>АТК 26-18-13-96</a>
+                        </nav>
+                    </nav>
+                    <nav class="nav nav-pills flex-column">
+                        <h6 class="nav-link">Заглушки</h6>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ms-3 my-1" href="#">АТК 24.200.02-90</a>
+                            <a class="nav-link ms-3 my-1" href="#">АТК 26-18-5-93</a>
+                        </nav>
+                    </nav>
+                    <nav class="nav nav-pills flex-column">
+                        <h6 class="nav-link">Днища</h6>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ms-3 my-1" href="#">ГОСТ 6533-78</a>
+                        </nav>
+                    </nav>
+                </nav>
+            </aside>
+            <main class="col-9 gy-4">
+                {% block documents_main %}
 
-    <nav class="navbar navbar-light flex-column align-items-stretch p-3">
-        <h6 class="navbar-brand">Стандарты:</h6>
-        <nav class="nav nav-pills flex-column">
-            <h6 class="nav-link">Фланцы</h6>
-            <nav class="nav nav-pills flex-column">
-                <a class="nav-link ms-3 my-1" href="{% url 'gost33259' %}">ГОСТ 33259-2015</a>
-                <a class="nav-link ms-3 my-1" href={% url 'atk261813' %}>АТК 26-18-13-96</a>
-            </nav>
-        </nav>
-        <nav class="nav nav-pills flex-column">
-            <h6 class="nav-link">Заглушки</h6>
-            <nav class="nav nav-pills flex-column">
-                <a class="nav-link ms-3 my-1" href="#">АТК 24.200.02-90</a>
-                <a class="nav-link ms-3 my-1" href="#">АТК 26-18-5-93</a>
-            </nav>
-        </nav>
-        <nav class="nav nav-pills flex-column">
-            <h6 class="nav-link">Днища</h6>
-            <nav class="nav nav-pills flex-column">
-                <a class="nav-link ms-3 my-1" href="#">ГОСТ 6533-78</a>
-            </nav>
-        </nav>
-    </nav>
-
+                {% endblock %}
+            </main>
+        </div>
+    </div>
 {% endblock %}
 
+
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<section>
+    <div class="row">
+
+        <div class="col-md-4 col-lg-3">
+            <div class="row">
+                <aside class="col-sm-6 col-md-12">
+                    <!-- ASIDE #1 -->
+                </aside>
+            </div>
+        </div>
+
+        <main class="col-md-8 col-lg-9">
+            <!-- MAIN -->
+        </main>
+    </div>
+</section>
+<!-- FOOTER -->
+<footer>
+
+</footer>
+</div>

@@ -55,16 +55,16 @@ class Gost33259View(View):
             '02': ['dn_passage', 'pn', 'd0', 'd2', 'dv_lower', 'b_lower', 'b1_lower', 'c_lower', 'c1_lower', 'd',
                    'd1', 'd_lower', 'n_lower', 'pin'
                    ],
-            '11': ['dn_passage', 'pn', 'dm', 'dn', 'd1_lower', 'b_lower', 'h', 'h1', 'd', 'd1', 'b_lower', 'n_lower',
+            '11': ['dn_passage', 'pn', 'dm', 'dn', 'd1_lower', 'b_lower', 'h', 'h1', 'd', 'd1', 'd_lower', 'n_lower',
                    'pin'
                    ],
         }
 
         if form.is_valid():
+            type_fl = form.cleaned_data['type_fl']
+            surface_fl = form.cleaned_data['surface']
             dn_passage = form.cleaned_data['dn_passage']
             pn = form.cleaned_data['pn']
-            type_fl = form.cleaned_data['type']
-            surface_fl = form.cleaned_data['surface']
             # выбор данных из БД согласно DN, PN и типу фланца
             objects_types_fl = {
                 # для типа 01
@@ -78,9 +78,8 @@ class Gost33259View(View):
             drawing_flange_surface = Gost33259SurfaceDrawing.objects.filter(surface_fl=surface_fl)
             flange_data = objects_types_fl[type_fl].filter(dn_passage=dn_passage, pn=pn)
             surface_data = Gost33259SurfaceValues.objects.filter(dn_passage=dn_passage, pn=pn)
-            mass_flange = Gost33259Mass.objects.filter(dn_passage=dn_passage, type_fl=type_fl).values_list(f'pn_{pn}',
-                                                                                                           flat=True
-                                                                                                           ).get()
+            mass_flange = Gost33259Mass.objects.filter(dn_passage=dn_passage,
+                                                       type_fl=type_fl).values_list(f'pn_{pn}', flat=True).get()
             # необходимые поля из БД для отображения в шаблоне
             fields_surface = values_surface_fl[surface_fl]
             fields_type = values_types_fl[type_fl]
