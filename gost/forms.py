@@ -37,28 +37,22 @@ class Gost33259Form(forms.Form):
         initial=''
     )
 
-    def clean_type_fl(self):
-        type_fl = self.cleaned_data['type_fl']
-        if type_fl not in ['01', '02', '11']:
-            raise ValidationError(_(f'Нет значения %(value)s'),
-                                  params={'value': type_fl}
-                                  )
-        return type_fl
+    def clean(self):
+        cleaned_data = super().clean()
+        type_fl = cleaned_data.get('type_fl')
+        surface = cleaned_data.get('surface')
+        dn_passage = cleaned_data.get('dn_passage')
+        pn = cleaned_data.get('pn')
 
-    # def clean_surface_fl(self):
-    #     surface = self.cleaned_data['surface']
-    #     if surface not in ['B', 'C', 'D', 'E', 'F']:
-    #         raise ValidationError(_(f'Нет значения %(value)s'),
-    #                               params={'value': surface}
-    #                               )
-    #     return surface
-
-
-# def clean_dn_passage(self):
-#     dn_passage = self.cleaned_data['dn_passage']
-#
-# def clean_dn_passage(self):
-#     pn = self.cleaned_data['pn']
+        if type_fl and surface and dn_passage and pn:
+            if type_fl not in self.fields['type_fl'].help_text:
+                self.add_error('type_fl', ValidationError(_('Нет значения "%(value)s"'), params={'value': type_fl}))
+            if surface not in self.fields['surface'].help_text:
+                self.add_error('surface', ValidationError(_('Нет значения "%(value)s"'), params={'value': surface}))
+            if dn_passage not in self.fields['dn_passage'].help_text:
+                self.add_error('dn_passage', ValidationError(_('Нет значения "%(value)s"'), params={'value': dn_passage}))
+            if pn not in self.fields['pn'].help_text:
+                self.add_error('pn', ValidationError(_('Нет значения "%(value)s"'), params={'value': pn}))
 
 
 class Atk261813Form(forms.Form):
