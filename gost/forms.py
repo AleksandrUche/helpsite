@@ -46,13 +46,13 @@ class Gost33259Form(forms.Form):
 
         if type_fl and surface and dn_passage and pn:
             if type_fl not in self.fields['type_fl'].help_text:
-                self.add_error('type_fl', ValidationError(_('Нет значения "%(value)s"'), params={'value': type_fl}))
+                self.add_error('type_fl', f'Нет значения "{type_fl}"')
             if surface not in self.fields['surface'].help_text:
-                self.add_error('surface', ValidationError(_('Нет значения "%(value)s"'), params={'value': surface}))
+                self.add_error('surface', f'Нет значения "{surface}"')
             if dn_passage not in self.fields['dn_passage'].help_text:
-                self.add_error('dn_passage', ValidationError(_('Нет значения "%(value)s"'), params={'value': dn_passage}))
+                self.add_error('dn_passage', f'Нет значения "{dn_passage}"')
             if pn not in self.fields['pn'].help_text:
-                self.add_error('pn', ValidationError(_('Нет значения "%(value)s"'), params={'value': pn}))
+                self.add_error('pn', f'Нет значения "{pn}"')
 
 
 class Atk261813Form(forms.Form):

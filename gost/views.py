@@ -78,6 +78,8 @@ class Gost33259View(View):
             drawing_flange_surface = Gost33259SurfaceDrawing.objects.filter(surface_fl=surface_fl)
             flange_data = objects_types_fl[type_fl].filter(dn_passage=dn_passage, pn=pn)
             surface_data = Gost33259SurfaceValues.objects.filter(dn_passage=dn_passage, pn=pn)
+            if pn == '2,5':
+                pn = '2'
             mass_flange = Gost33259Mass.objects.filter(dn_passage=dn_passage,
                                                        type_fl=type_fl).values_list(f'pn_{pn}', flat=True).get()
             # необходимые поля из БД для отображения в шаблоне

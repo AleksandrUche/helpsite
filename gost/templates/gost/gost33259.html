@@ -31,16 +31,18 @@
 
     {% if flange_data %}
 
-        <div class="row">
+        <div class="row align-items-center">
             {% for ft in drawing_flange_type %}
                 <div class="col">
-                    <img class="mx-auto d-block" src="{{ ft.flange_drawing.url }}">
+                    <img class="mx-auto d-block align-middle" src="{{ ft.flange_drawing.url }}">
+                    <p class="text-center">Тип фланца "{{ form.type_fl.value }}"</p>
                 </div>
             {% endfor %}
 
             {% for fs in drawing_flange_surface %}
                 <div class="col">
-                    <img class="mx-auto d-block" src="{{ fs.surface_drawing.url }}">
+                    <img class="mx-auto d-block align-middle" src="{{ fs.surface_drawing.url }}">
+                    <p class="text-center">Уплотнительная поверхность "{{ form.surface.value }}"</p>
                 </div>
             {% endfor %}
         </div>
@@ -96,6 +98,7 @@
                 </table>
             </div>
         </div>
+
         {% if mass_flange %}
             <p class="fw-bold">Масса фланца: {{ mass_flange }} кг</p>
         {% else %}
@@ -104,187 +107,47 @@
 
     {% else %}
 
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col">
                 <img src="{% static 'images/gosts/gost33259-2015/01.png' %}" class="img-fluid" alt="Тип 01">
+                <p class="text-center">Тип фланца 01</p>
             </div>
             <div class="col">
                 <img src="{% static 'images/gosts/gost33259-2015/02.png' %}" class="img-fluid" alt="Тип 02">
+                <p class="text-center">Тип фланца 02</p>
             </div>
             <div class="col">
                 <img src="{% static 'images/gosts/gost33259-2015/11.png' %}" class="img-fluid" alt="Тип 11">
+                <p class="text-center">Тип фланца 11</p>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col">
                 <img src="{% static 'images/gosts/gost33259-2015/surface/execution_B.jpg' %}" class="img-fluid"
                      alt="Уплотнительная поверхность B">
+                <p class="text-center">Уплотнительная поверхность B</p>
             </div>
             <div class="col">
                 <img src="{% static 'images/gosts/gost33259-2015/surface/execution_E.jpg' %}" class="img-fluid"
                      alt="Уплотнительная поверхность E">
+                <p class="text-center">Уплотнительная поверхность E</p>
             </div>
             <div class="col">
                 <img src="{% static 'images/gosts/gost33259-2015/surface/execution_F.jpg' %}" class="img-fluid"
                      alt="Уплотнительная поверхность F">
+                <p class="text-center">Уплотнительная поверхность F</p>
             </div>
             <div class="col">
                 <img src="{% static 'images/gosts/gost33259-2015/surface/execution_C.jpg' %}" class="img-fluid"
                      alt="Уплотнительная поверхность C">
+                <p class="text-center">Уплотнительная поверхность C</p>
             </div>
             <div class="col">
                 <img src="{% static 'images/gosts/gost33259-2015/surface/execution_D.jpg' %}" class="img-fluid"
                      alt="Уплотнительная поверхность D">
+                <p class="text-center">Уплотнительная поверхность D</p>
             </div>
         </div>
     {% endif %}
 {% endblock %}
-
-{#{% block documents_main %}#}
-{#    <div class="container">#}
-{#        <form class="row g-3" action="{% url 'gost33259' %}" method="POST">#}
-{#            {% csrf_token %}#}
-{#            {% for field in form %}#}
-{#                <div class="col">#}
-{#                    <label for="id_{{ field.name }}">{{ field.label }}</label>#}
-{#                    <input type="text" class="form-control"#}
-{#                           list="{{ field.name }}"#}
-{#                           name="{{ field.name }}"#}
-{#                           id="id_{{ field.name }}"#}
-{#                            {% if field.value %}#}
-{#                           value="{{ field.value }}"#}
-{#                            {% else %}#}
-{#                           placeholder="Введите значение"#}
-{#                            {% endif %}>#}
-{#                    <datalist id="{{ field.name }}">#}
-{#                        {% for elem in field.help_text %}#}
-{#                            <option value="{{ elem }}">#}
-{#                        {% endfor %}#}
-{#                    </datalist>#}
-{#                </div>#}
-{#            {% endfor %}#}
-{##}
-{#            <div class="col-12">#}
-{#                <input type="submit" value="Найти" class="btn btn-primary">#}
-{#            </div>#}
-{##}
-{#        </form>#}
-{#    </div>#}
-{##}
-{##}
-{#    {% if flange_data %}#}
-{#        <div class="container">#}
-{#            <div class="row">#}
-{#                {% for ft in drawing_flange_type %}#}
-{#                    <div class="col">#}
-{#                        <img class="mx-auto d-block" src="{{ ft.flange_drawing.url }}">#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{##}
-{#                {% for fs in drawing_flange_surface %}#}
-{#                    <div class="col">#}
-{#                        <img class="mx-auto d-block" src="{{ fs.surface_drawing.url }}">#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="container">#}
-{#            <div class="row">#}
-{#                <div class="col">#}
-{#                    <table class="table table-bordered caption-top">#}
-{#                        <caption>Размеры фланца</caption>#}
-{#                        <thead>#}
-{#                        <tr>#}
-{#                            {% for value in flange_data %}#}
-{#                                {% for field in fields_type %}#}
-{#                                    <th scope="col">{{ value|get_verbose_field_name:field }}</th>#}
-{#                                {% endfor %}#}
-{#                            {% endfor %}#}
-{#                        </tr>#}
-{#                        </thead>#}
-{#                        <tbody>#}
-{#                        <tr>#}
-{#                            {% for value in flange_data %}#}
-{#                                {% for field in fields_type %}#}
-{#                                    <td>{{ value|getattribute:field }}</td>#}
-{#                                {% endfor %}#}
-{#                            {% endfor %}#}
-{#                        </tr>#}
-{#                        </tbody>#}
-{#                    </table>#}
-{#                </div>#}
-{##}
-{#                <div class="col">#}
-{#                    <table class="table table-bordered caption-top">#}
-{#                        <caption>Размеры уплотнительной поверхности</caption>#}
-{#                        <thead>#}
-{#                        <tr>#}
-{#                            {% for value in surface_data %}#}
-{#                                {% for field in fields_surface %}#}
-{#                                    <th class="align-middle"#}
-{#                                        scope="col">{{ value|get_verbose_field_name:field }}</th>#}
-{#                                {% endfor %}#}
-{#                            {% endfor %}#}
-{#                        </tr>#}
-{#                        </thead>#}
-{#                        <tbody>#}
-{#                        <tr>#}
-{#                            {% for value in surface_data %}#}
-{#                                {% for field in fields_surface %}#}
-{#                                    <td>{{ value|getattribute:field }}</td>#}
-{#                                {% endfor %}#}
-{#                            {% endfor %}#}
-{#                        </tr>#}
-{#                        </tbody>#}
-{#                    </table>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="container">#}
-{#            <p class="fw-bold">Масса фланца: {{ mass_flange }} кг</p>#}
-{#        </div>#}
-{##}
-{#    {% else %}#}
-{#        <div class="container">#}
-{#            <div class="row">#}
-{#                <div class="col">#}
-{#                    <img src="{% static 'images/gosts/gost33259-2015/01.png' %}" class="img-fluid" alt="Тип 01">#}
-{#                </div>#}
-{#                <div class="col">#}
-{#                    <img src="{% static 'images/gosts/gost33259-2015/02.png' %}" class="img-fluid" alt="Тип 02">#}
-{#                </div>#}
-{#                <div class="col">#}
-{#                    <img src="{% static 'images/gosts/gost33259-2015/11.png' %}" class="img-fluid" alt="Тип 11">#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="container">#}
-{#            <div class="row">#}
-{#                <div class="col">#}
-{#                    <img src="{% static 'images/gosts/gost33259-2015/surface/execution_B.jpg' %}" class="img-fluid"#}
-{#                         alt="Уплотнительная поверхность B">#}
-{#                </div>#}
-{#                <div class="col">#}
-{#                    <img src="{% static 'images/gosts/gost33259-2015/surface/execution_E.jpg' %}" class="img-fluid"#}
-{#                         alt="Уплотнительная поверхность E">#}
-{#                </div>#}
-{#                <div class="col">#}
-{#                    <img src="{% static 'images/gosts/gost33259-2015/surface/execution_F.jpg' %}" class="img-fluid"#}
-{#                         alt="Уплотнительная поверхность F">#}
-{#                </div>#}
-{#                <div class="col">#}
-{#                    <img src="{% static 'images/gosts/gost33259-2015/surface/execution_C.jpg' %}" class="img-fluid"#}
-{#                         alt="Уплотнительная поверхность C">#}
-{#                </div>#}
-{#                <div class="col">#}
-{#                    <img src="{% static 'images/gosts/gost33259-2015/surface/execution_D.jpg' %}" class="img-fluid"#}
-{#                         alt="Уплотнительная поверхность D">#}
-{#                </div>#}
-{##}
-{#            </div>#}
-{#        </div>#}
-{##}
-{#    {% endif %}#}
-{##}
-{#{% endblock %}#}
