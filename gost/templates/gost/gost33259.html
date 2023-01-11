@@ -7,13 +7,14 @@
     <form class="row g-3" action="{% url 'gost33259' %}" method="POST">
         {% csrf_token %}
         {% for field in form %}
-            <div class="col">
+            <div class="col-xxl-3 col-lg-6">
                 <label for="id_{{ field.name }}">{{ field.label }}</label>
                 <input type="text" class="form-control"
                        list="{{ field.name }}"
                        name="{{ field.name }}"
                        id="id_{{ field.name }}"
-                       value="{{ field.value }}">
+                       value="{{ field.value }}"
+                       onfocus="this.value=''">
                 <datalist id="{{ field.name }}">
                     {% for elem in field.help_text %}
                         <option value="{{ elem }}">
@@ -33,14 +34,14 @@
 
         <div class="row align-items-center">
             {% for ft in drawing_flange_type %}
-                <div class="col">
+                <div class="col-xl-8 col-md-12">
                     <img class="mx-auto d-block align-middle" src="{{ ft.flange_drawing.url }}">
                     <p class="text-center">Тип фланца "{{ form.type_fl.value }}"</p>
                 </div>
             {% endfor %}
 
             {% for fs in drawing_flange_surface %}
-                <div class="col">
+                <div class="col-xl-4 col-md-12">
                     <img class="mx-auto d-block align-middle" src="{{ fs.surface_drawing.url }}">
                     <p class="text-center">Уплотнительная поверхность "{{ form.surface.value }}"</p>
                 </div>
@@ -49,14 +50,14 @@
 
 
         <div class="row">
-            <div class="col">
+            <div class="col-xl-8 col-md-12">
                 <table class="table table-bordered caption-top">
                     <caption>Размеры фланца</caption>
                     <thead>
                     <tr>
                         {% for value in flange_data %}
                             {% for field in fields_type %}
-                                <th scope="col">{{ value|get_verbose_field_name:field }}</th>
+                                <th class="text-center" scope="col">{{ value|get_verbose_field_name:field }}</th>
                             {% endfor %}
                         {% endfor %}
                     </tr>
@@ -65,7 +66,7 @@
                     <tr>
                         {% for value in flange_data %}
                             {% for field in fields_type %}
-                                <td>{{ value|getattribute:field }}</td>
+                                <td class="text-center">{{ value|getattribute:field }}</td>
                             {% endfor %}
                         {% endfor %}
                     </tr>
@@ -73,14 +74,14 @@
                 </table>
             </div>
 
-            <div class="col">
+            <div class="col-xl-4 col-md-12">
                 <table class="table table-bordered caption-top">
                     <caption>Размеры уплотнительной поверхности</caption>
                     <thead>
                     <tr>
                         {% for value in surface_data %}
                             {% for field in fields_surface %}
-                                <th class="align-middle"
+                                <th class="align-middle text-center"
                                     scope="col">{{ value|get_verbose_field_name:field }}</th>
                             {% endfor %}
                         {% endfor %}
@@ -90,7 +91,7 @@
                     <tr>
                         {% for value in surface_data %}
                             {% for field in fields_surface %}
-                                <td>{{ value|getattribute:field }}</td>
+                                <td class="text-center">{{ value|getattribute:field }}</td>
                             {% endfor %}
                         {% endfor %}
                     </tr>
@@ -106,45 +107,50 @@
         {% endif %}
 
     {% else %}
-
         <div class="row align-items-center">
             <div class="col">
-                <img src="{% static 'images/gosts/gost33259-2015/01.png' %}" class="img-fluid" alt="Тип 01">
+                <img src="{% static 'images/gosts/gost33259-2015/01.png' %}" class="mx-auto d-block align-middle"
+                     alt="Тип 01">
                 <p class="text-center">Тип фланца 01</p>
             </div>
             <div class="col">
-                <img src="{% static 'images/gosts/gost33259-2015/02.png' %}" class="img-fluid" alt="Тип 02">
+                <img src="{% static 'images/gosts/gost33259-2015/02.png' %}"
+                     class="mx-auto d-block align-middle"
+                     alt="Тип 02">
                 <p class="text-center">Тип фланца 02</p>
             </div>
             <div class="col">
-                <img src="{% static 'images/gosts/gost33259-2015/11.png' %}" class="img-fluid" alt="Тип 11">
+                <img src="{% static 'images/gosts/gost33259-2015/11.png' %}"
+                     class="mx-auto d-block align-middle"
+                     alt="Тип 11">
                 <p class="text-center">Тип фланца 11</p>
             </div>
         </div>
 
         <div class="row align-items-center">
             <div class="col">
-                <img src="{% static 'images/gosts/gost33259-2015/surface/execution_B.jpg' %}" class="img-fluid"
+                <img src="{% static 'images/gosts/gost33259-2015/surface/execution_B.jpg' %}"
+                     class="mx-auto d-block align-middle"
                      alt="Уплотнительная поверхность B">
                 <p class="text-center">Уплотнительная поверхность B</p>
             </div>
             <div class="col">
-                <img src="{% static 'images/gosts/gost33259-2015/surface/execution_E.jpg' %}" class="img-fluid"
+                <img src="{% static 'images/gosts/gost33259-2015/surface/execution_E.jpg' %}" class="mx-auto d-block align-middle"
                      alt="Уплотнительная поверхность E">
                 <p class="text-center">Уплотнительная поверхность E</p>
             </div>
             <div class="col">
-                <img src="{% static 'images/gosts/gost33259-2015/surface/execution_F.jpg' %}" class="img-fluid"
+                <img src="{% static 'images/gosts/gost33259-2015/surface/execution_F.jpg' %}" class="mx-auto d-block align-middle"
                      alt="Уплотнительная поверхность F">
                 <p class="text-center">Уплотнительная поверхность F</p>
             </div>
             <div class="col">
-                <img src="{% static 'images/gosts/gost33259-2015/surface/execution_C.jpg' %}" class="img-fluid"
+                <img src="{% static 'images/gosts/gost33259-2015/surface/execution_C.jpg' %}" class="mx-auto d-block align-middle"
                      alt="Уплотнительная поверхность C">
                 <p class="text-center">Уплотнительная поверхность C</p>
             </div>
             <div class="col">
-                <img src="{% static 'images/gosts/gost33259-2015/surface/execution_D.jpg' %}" class="img-fluid"
+                <img src="{% static 'images/gosts/gost33259-2015/surface/execution_D.jpg' %}" class="mx-auto d-block align-middle"
                      alt="Уплотнительная поверхность D">
                 <p class="text-center">Уплотнительная поверхность D</p>
             </div>
